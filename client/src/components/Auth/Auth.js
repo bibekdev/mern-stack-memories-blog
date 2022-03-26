@@ -17,15 +17,35 @@ import useStyles from './styles';
 import Input from './Input';
 import { AUTH } from '../../constants/actionTypes';
 
+const initialData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setSignup] = useState(false);
+  const [formData, setFormData] = useState(initialData);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
+  };
+
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleShowPassword = () =>
     setShowPassword(prevShowPassword => !prevShowPassword);
 
@@ -61,8 +81,8 @@ const Auth = () => {
                   half
                 />
                 <Input
-                  name='firstName'
-                  label='First Name'
+                  name='lastName'
+                  label='Last Name'
                   handleChange={handleChange}
                   half
                 />
