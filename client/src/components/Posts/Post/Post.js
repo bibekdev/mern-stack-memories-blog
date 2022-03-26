@@ -14,7 +14,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 import useStyles from './styles';
-import { deletePost } from '../../../actions/posts.actions';
+import { deletePost, likePost } from '../../../actions/posts.actions';
 
 const Post = ({ post, setCurrentId }) => {
   const { selectedFile, title, message, tags, creator, createdAt, likeCount } =
@@ -40,22 +40,25 @@ const Post = ({ post, setCurrentId }) => {
 
       <div className={classes.details}>
         <Typography variant='body2' color='textSecondary'>
-          {tags.map(tag => `#${tag}`)}
+          {tags.map(tag => ` #${tag} `)}
         </Typography>
       </div>
       <Typography className={classes.title} variant='h5' gutterBottom>
         {title}
       </Typography>
       <CardContent>
-        <Typography variant='h6' gutterBottom>
+        <Typography variant='h6' color='textSecondary' gutterBottom>
           {message}
         </Typography>
       </CardContent>
 
       <CardActions className={classes.cardActions}>
-        <Button size='small' color='primary' onClick={() => {}}>
+        <Button
+          size='small'
+          color='primary'
+          onClick={() => dispatch(likePost(post._id))}>
           <ThumbUpAltIcon fontSize='small' />
-          Like
+          &nbsp; Like &nbsp;
           {likeCount}
         </Button>
 
